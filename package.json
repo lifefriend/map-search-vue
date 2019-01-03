@@ -1,7 +1,7 @@
 {
   "name": "map-search-vue",
   "description": "A map address search project use vue2",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "lifefriend_007 <abc_xyz_234@126.com>",
   "main": "dist/map-search-vue.js",
   "license": "MIT",
@@ -20,6 +20,10 @@
     "last 2 versions",
     "not ie <= 8"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lifefriend/map-search-vue.git"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
