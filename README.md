@@ -46,13 +46,13 @@ Vue.use(MapSearchVue)
 ### Auto GeoCode
 
 ```html
-<map-search-vue appkey="YOUR_APP_KEY" :autoGeoCode="true"></map-search-vue>
+<map-search-vue tk="YOUR_TK_KEY" appkey="YOUR_APP_KEY" :autoGeoCode="true"></map-search-vue>
 ```
 
 ## Method
 
 ```html
-<map-search-vue ref="map" @map-info="whenChange" ></map-search-vue>
+<map-search-vue tk="YOUR_TK_KEY" appkey="YOUR_APP_KEY" ref="map" @map-info="whenChange" ></map-search-vue>
 
 vm.$refs.map.search("txt");
 vm.$refs.map.suggest("txt");
@@ -78,3 +78,4 @@ vm.$refs.map.geocode({x:112,y:32});
 | markerInCenter | Boolean | auto center map           | true                                    |
 | autoGeoCode    | Boolean | geocode when map change   | false                                   |
 | timeout        | Number  | http request timeout      | 6000                                    |
+| tk             | String  | tianditu key              | ""                                      |

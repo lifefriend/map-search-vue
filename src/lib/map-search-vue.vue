@@ -26,6 +26,10 @@ export default {
       type: String,
       default: "8a7b9aac0db21f9dd995e61a14685f05"
     },
+    tk: {
+      type: String,
+      default: "a4cf58a5a1091c0fa0604d748a7ef72e"
+    },
     https: {
       type: Boolean,
       default: true
@@ -47,7 +51,7 @@ export default {
     return {
       mapInstance: null,
       baseMapUrl: null,
-      suggestUrl: null,
+      geoCodeUrl: null,
       searchUrl: null,
       isGeoCoding: false
     };
@@ -56,8 +60,8 @@ export default {
     Axios.defaults.timeout = this.timeout;
     const protocol = this.https ? "https" : "http";
     this.baseMapUrl = `${protocol}://t{s}.tianditu.gov.cn/DataServer`;
-    this.suggestUrl = `${protocol}://map.tianditu.gov.cn/data/suggest`;
-    this.searchUrl = `${protocol}://map.tianditu.gov.cn/query.shtml`;
+    this.geoCodeUrl = `${protocol}://api.tianditu.gov.cn/geocoder`;
+    this.searchUrl = `${protocol}://api.tianditu.gov.cn/search`;
     this.$nextTick(() => {
       initMap.call(this);
     });
@@ -77,13 +81,14 @@ export default {
       // 判断上一次geocode是否完成
       if (this.isGeoCoding) return;
       this.isGeoCoding = true;
-      const url = `${this.searchUrl}?postStr={"lon":"${coordinate.x}","lat":"${
+      const url = `${this.geoCodeUrl}?postStr={"lon":"${coordinate.x}","lat":"${
         coordinate.y
-      }","appkey":"${this.appkey}","ver":"1"}&type=geocode`;
+      }","appkey":"${this.appkey}","ver":"1"}&type=geocode&tk=${this.tk}`;
       Axios.get(url)
         .then(response => {
           this.isGeoCoding = false;
           const data = response.data.result || {};
+          data.location = data.location || {};
           this.notify(
             "geocode-success",
             { x: data.location.lon, y: data.location.lat },
@@ -102,10 +107,10 @@ export default {
     },
     suggest(txt) {
       const url = `${
-        this.suggestUrl
+        this.searchUrl
       }?postStr={"yingjiType":1,"sourceType":0,"keyWord":"${txt}","level":12,"mapBound":"${this.searchExtent.join(
         ","
-      )}","queryType":"4","count":"12","start":"0"}`;
+      )}","queryType":"4","count":"12","start":"0"}&type=query&tk=${this.tk}`;
       Axios.get(url)
         .then(response => {
           this.notify(
@@ -128,7 +133,7 @@ export default {
         txt
       }","level":"12","mapBound":"${this.searchExtent.join(
         ","
-      )}","queryType":"1","count":"12","start":"0"}&type=query`;
+      )}","queryType":"1","count":"12","start":"0"}&type=query&tk=${this.tk}`;
       Axios.get(url)
         .then(response => {
           this.notify(
@@ -173,13 +178,13 @@ function initMap() {
     layers: [
       new maptalks.TileLayer("vec_c", {
         tileSystem: [1, -1, -180, 90],
-        urlTemplate: baseUrl + "?T=vec_c&x={x}&y={y}&l={z}",
+        urlTemplate: baseUrl + "?T=vec_c&x={x}&y={y}&l={z}" + `&tk=${this.tk}`,
         subdomains: ["1", "2", "3", "4", "5"],
         crossOrigin: "anonymous"
       }),
       new maptalks.TileLayer("cva_c", {
         tileSystem: [1, -1, -180, 90],
-        urlTemplate: baseUrl + "?T=cva_c&x={x}&y={y}&l={z}",
+        urlTemplate: baseUrl + "?T=cva_c&x={x}&y={y}&l={z}"+ `&tk=${this.tk}`,
         subdomains: ["1", "2", "3", "4", "5"],
         crossOrigin: "anonymous"
       })
