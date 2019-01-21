@@ -30,7 +30,7 @@ Vue.use(MapSearchVue)
 
 ```vue
 <template>
-  <map-search-vue></map-search-vue>
+  <map-search-vue tk="YOUR_TK_KEY"></map-search-vue>
 </template>
 ```
 
@@ -40,19 +40,19 @@ Vue.use(MapSearchVue)
 ### Map with center marker
 
 ```html
-<map-search-vue :center=[110,32]></map-search-vue>
+<map-search-vue tk="YOUR_TK_KEY" :center=[110,32]></map-search-vue>
 ```
 
 ### Auto GeoCode
 
 ```html
-<map-search-vue tk="YOUR_TK_KEY" appkey="YOUR_APP_KEY" :autoGeoCode="true"></map-search-vue>
+<map-search-vue tk="YOUR_TK_KEY" :autoGeoCode="true"></map-search-vue>
 ```
 
 ## Method
 
 ```html
-<map-search-vue tk="YOUR_TK_KEY" appkey="YOUR_APP_KEY" ref="map" @map-info="whenChange" ></map-search-vue>
+<map-search-vue tk="YOUR_TK_KEY" ref="map" @map-info="whenChange" ></map-search-vue>
 
 vm.$refs.map.search("txt");
 vm.$refs.map.suggest("txt");
@@ -73,7 +73,6 @@ vm.$refs.map.geocode({x:112,y:32});
 | -------------- | ------- | ------------------------- | --------------------------------------- |
 | center         | Array   | initial center of the map | [114.316200103,30.5810841269]           |
 | searchExtent   | Array   | Search Range              | [110.58838,29.25286,118.09204,31.98012] |
-| appkey         | String  | geocode app key           | ""                                      |
 | https          | Boolean | http or https             | true                                    |
 | markerInCenter | Boolean | auto center map           | true                                    |
 | autoGeoCode    | Boolean | geocode when map change   | false                                   |

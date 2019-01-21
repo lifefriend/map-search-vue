@@ -22,10 +22,6 @@ export default {
         return [110.58838, 29.25286, 118.09204, 31.98012];
       }
     },
-    appkey: {
-      type: String,
-      default: "8a7b9aac0db21f9dd995e61a14685f05"
-    },
     tk: {
       type: String,
       default: "a4cf58a5a1091c0fa0604d748a7ef72e"
@@ -83,7 +79,7 @@ export default {
       this.isGeoCoding = true;
       const url = `${this.geoCodeUrl}?postStr={"lon":"${coordinate.x}","lat":"${
         coordinate.y
-      }","appkey":"${this.appkey}","ver":"1"}&type=geocode&tk=${this.tk}`;
+      }","ver":"1"}&type=geocode&tk=${this.tk}`;
       Axios.get(url)
         .then(response => {
           this.isGeoCoding = false;
